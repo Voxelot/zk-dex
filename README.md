@@ -19,6 +19,18 @@ Compile ZK-Verifiers
 npm run zokrates-compile
 ```
 
+TODO
+---
+
+- [x] implement zokrates circuits
+- [x] zokrates -> solidity tooling
+- [x] draft implementation of zk exchange protocol
+- [ ] void order api
+- [ ] witness generation tooling
+- [ ] ZKExchange client web3.js library
+- [ ] ZKExchange unit tests
+- [ ] UI
+
 Protocol Sequence Diagram
 ---
 
