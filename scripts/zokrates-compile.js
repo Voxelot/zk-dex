@@ -42,6 +42,4 @@ async function generateVerifier(path) {
         
     }
     process.exit(0)
-    // exec('docker run -t -d --name=test --rm zokrates/zokrates')
-    // exec('docker cp circuits/')
 })()
