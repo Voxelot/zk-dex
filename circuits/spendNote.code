@@ -1,0 +1,25 @@
+import "hashes/sha256/512bitPacked.code" as sha256packed
+
+// original note hash, original note pk, original note value, original note nonce, 
+def main(field originalHash0, field originalHash1, private field originalTokenAddr, private field originalpk0, private field originalpk1, private field originalVal, private field originalNonce, field note0h0, field note0h1, private field note0TokenAddr, private field note0Receivingpk0, private field note0Receivingpk1, private field note0Val, private field note0Nonce, field note1h0, field note1h1, private field note1TokenAddr, private field note1Receivingpk0, private field note1Receivingpk1, private field note1Val, private field note1Nonce) -> (field):
+  // ensure orignal note value is fully consumed
+  originalVal == note0Val + note1Val
+
+  // get public key corresponding to private key
+  // circuit for above hasn't been implemented as yet, so directly using the private key for PoC
+  field[2] tmpHash = sha256packed([originalpk0, originalpk1, originalTokenAddr, originalVal])
+  field[2] hash = sha256packed([tmpHash[0], tmpHash[1], originalNonce, 0])
+  originalHash0 == hash[0]
+  originalHash1 == hash[0]
+
+  tmpHash = sha256packed([note0Receivingpk0, note0Receivingpk1, note0Val, note0TokenAddr])
+  hash = sha256packed([tmpHash[0], tmpHash[1], note0Nonce, 0])
+  note0h0 == hash[0]
+  note0h1 == hash[1]
+
+  tmpHash = sha256packed([note1Receivingpk0, note1Receivingpk1, note1Val, note1TokenAddr])
+  hash = sha256packed([tmpHash[0], tmpHash[1], note0Nonce, 0])
+  note1h0 == hash[0]
+  note1h1 == hash[1]
+
+  return 1

@@ -1,0 +1,21 @@
+{
+  "name": "zkdex",
+  "version": "0.0.1",
+  "description": "A Zero-Knowledge decentralized token exchange",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "zokrates-compile": "node scripts/zokrates-compile.js",
+    "template": "node scripts/test-template.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^7.0.1",
+    "handlebars": "^4.1.1",
+    "handlebars-helpers": "^0.10.0",
+    "klaw": "^3.0.0",
+    "mkdirp-promise": "^5.0.1",
+    "truffle": "^5.0.8"
+  }
+}

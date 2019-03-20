@@ -1,0 +1,26 @@
+import "hashes/sha256/512bitPacked.code" as sha256packed
+
+def main(field orderHash0, field orderHash1, private field takerTokenAddr, private field takerVal, private field orderNonce, field makerNoteHash0, field makerNoteHash1, private field makerTokenAddr, private field makerVal, private field makerpk0, private field makerpk1, private field makerNonce, field makerFillNoteHash0, field makerFillNoteHash1, private field makerFillNonce) -> (field):
+
+  // validate maker note ownership & smart contract will update note state
+
+  // get public key corresponding to private key
+  // circuit for above hasn't been implemented as yet, so sending in the private key instead for PoC
+  field[2] tmpHash = sha256packed([makerpk0, makerpk1, makerTokenAddr, makerVal])
+  field[2] hash = sha256packed([tmpHash[0], tmpHash[1], makerNonce, 0])
+  hash[0] == makerNoteHash0
+  hash[1] == makerNoteHash1
+
+  // validate pending fill note matches taker params
+  tmpHash = sha256packed([makerpk0, makerpk1, takerTokenAddr, takerVal])
+  hash = sha256packed([tmpHash[0], tmpHash[1], makerFillNonce, 0])
+  hash[0] == makerFillNoteHash0
+  hash[1] == makerFillNoteHash1
+
+  // validate order integrity
+  tmpHash = sha256packed([takerTokenAddr, takerVal, makerTokenAddr, makerVal])
+  hash = sha256packed([tmpHash[0], tmpHash[1], orderNonce, 0])
+  hash[0] == orderHash0
+  hash[1] == orderHash1
+
+  return 1

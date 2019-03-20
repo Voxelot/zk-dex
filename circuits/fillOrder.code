@@ -1,0 +1,26 @@
+import "hashes/sha256/512bitPacked.code" as sha256packed
+
+def main(field orderHash0, field orderHash1, private field makerTokenAddr, private field makerVal, private field orderNonce, field takerNoteHash0, field takerNoteHash1, private field takerTokenAddr, private field takerVal, private field takerpk0, private field takerpk1, private field takerNonce, field takerFillNoteHash0, field takerFillNoteHash1, private field takerFillNonce) -> (field):
+
+  // validate taker note ownership
+
+  // get public key corresponding to private key
+  // circuit for above hasn't been implemented as yet, so sending in the private key instead for PoC
+  field[2] tmpHash = sha256packed([takerpk0, takerpk1, takerTokenAddr, takerVal])
+  field[2] hash = sha256packed([tmpHash[0], tmpHash[1], takerNonce, 0])
+  hash[0] == takerNoteHash0
+  hash[1] == takerNoteHash1 
+
+  // validate fill note matches maker params
+  tmpHash = sha256packed([takerpk0, takerpk1, makerTokenAddr, makerVal])
+  hash = sha256packed([tmpHash[0], tmpHash[1], takerFillNonce, 0])
+  hash[0] == takerFillNoteHash0
+  hash[1] == takerFillNoteHash1
+
+  // validate order integrity
+  tmpHash = sha256packed([takerTokenAddr, takerVal, makerTokenAddr, makerVal])
+  hash = sha256packed([tmpHash[0], tmpHash[1], orderNonce, 0])
+  hash[0] == orderHash0
+  hash[1] == orderHash1
+
+  return 1

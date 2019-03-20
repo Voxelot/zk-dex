@@ -1,0 +1,10 @@
+import "hashes/sha256/512bitPacked.code" as sha256packed
+
+def main(field noteHash0, field noteHash1, field tokenAddr, field val, private field pk0, private field pk1, private field nonce) -> (field):
+  // get public key corresponding to private key
+  // circuit for above hasn't been implemented as yet, so sending in the private key instead for PoC
+  field[2] tmpHash = sha256packed([pk0, pk1, tokenAddr, val])
+  field[2] hash = sha256packed([tmpHash[0], tmpHash[1], nonce, 0])
+  hash[0] == noteHash0
+  hash[1] == noteHash1
+  return 1
